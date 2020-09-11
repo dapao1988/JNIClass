@@ -126,6 +126,45 @@ JNIEXPORT jint JNICALL Java_com_jni_demo_HelloWorld_sum_1large
     return sum;
 }
 
+JNIEXPORT jobjectArray Java_com_jni_demo_HelloWorld_init_1intarray_12d
+    (JNIEnv* env, jobject obj, jint size) {
+    jobjectArray result;
+    jclass clsIntArray;
+    jint i,j;
+
+    //1. 获取一个int型二维数组类的引用
+    clsIntArray = (*env)->FindClass(env, "[I");
+    if (clsIntArray == NULL) 
+    {
+        return NULL;
+    }
+
+    //2. 创建一个数组对象(里面每个元素用clsIntArray表示)
+    result = (*env)->NewObjectArray(env, size, clsIntArray, NULL);
+    if (result == NULL) {
+        return NULL;
+    }
+
+    //3. 赋值
+    for (i=0; i<size; ++i) {
+        jint buff[256];
+        jintArray int_arr = (*env)->NewIntArray(env, size);
+        if (int_arr == NULL) {
+            return NULL;
+        }
+
+        for(j=0; j<size; j++) {
+            buff[j] = i+j;
+        }
+
+        (*env)->SetIntArrayRegion(env, int_arr, 0, size, buff);
+        (*env)->SetObjectArrayElement(env, result, i, int_arr);
+        (*env)->DeleteLocalRef(env, int_arr);
+    }
+
+    return result;
+}
+
 #ifdef __cplusplus
 }
 #endif

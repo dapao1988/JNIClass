@@ -47,6 +47,14 @@ JNIEXPORT jint JNICALL Java_com_jni_demo_HelloWorld_sum_1tiny
 JNIEXPORT jint JNICALL Java_com_jni_demo_HelloWorld_sum_1large
   (JNIEnv *, jobject, jintArray);
 
+/*
+ * Class:     com_jni_demo_HelloWorld
+ * Method:    init_intarray_2d
+ * Signature: (I)[[I
+ */
+JNIEXPORT jobjectArray JNICALL Java_com_jni_demo_HelloWorld_init_1intarray_12d
+  (JNIEnv *, jobject, jint);
+
 #ifdef __cplusplus
 }
 #endif

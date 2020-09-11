@@ -9,6 +9,8 @@ public class HelloWorld {
     public native int sum_tiny(int[] array);
     public native int sum_large(int[] array);
 
+    public native int[][] init_intarray_2d(int size);
+
 	public static void main(String[] args) {
         String libraryDirs = System.getProperty("java.library.path");
         System.out.println(libraryDirs);
@@ -46,6 +48,18 @@ public class HelloWorld {
         }
         int sum_large = hello_cls.sum_large(array_large);
         System.out.println("sum_large: " + sum_large);
+
+        /**
+         * initialized a 2d-array */
+        int[][] int_array_2d = hello_cls.init_intarray_2d(4);
+        System.out.println("2d-array is:");
+        for (int i=0; i<4; ++i) {
+            for (int j=0; j<4; ++j) {
+                System.out.format("%d ", int_array_2d[i][j]);
+            }
+            System.out.format("\n");
+        }
+
 	}
 
 	static {
