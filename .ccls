@@ -1,0 +1,7 @@
+%compile_commands.json
+%c -std=c11
+%cpp -std=c++14
+%c %cpp -pthread
+%h %hpp
+-I/opt/jdk1.8.0_171/include
+-I/opt/jdk1.8.0_171/include/linux
