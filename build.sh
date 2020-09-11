@@ -1,5 +1,5 @@
 #! /bin/bash
-javac src/com/jni/demo/HelloWorld.java -d ./bin
+javac src/com/jni/demo/*.java -d ./bin
 javah -jni -classpath ./bin -d ./src/jni com.jni.demo.HelloWorld
 pushd src
 #gcc -I$JAVA_HOME/include -I$JAVA_HOME/include/linux -Ijni -fPIC -shared cpp/HelloWorld.c -o ../bin/com/jni/demo/libHelloWorld.so

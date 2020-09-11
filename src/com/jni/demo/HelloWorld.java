@@ -11,6 +11,9 @@ public class HelloWorld {
 
     public native int[][] init_intarray_2d(int size);
 
+    public static native void CallJavaStaticMethod();
+    public native void CallJavaInstanceMethod();
+
 	public static void main(String[] args) {
         String libraryDirs = System.getProperty("java.library.path");
         System.out.println(libraryDirs);
@@ -59,6 +62,12 @@ public class HelloWorld {
             }
             System.out.format("\n");
         }
+
+
+        /**
+         * call java API for JNI callback method */
+        CallJavaStaticMethod();
+        hello_cls.CallJavaInstanceMethod();
 
 	}
 

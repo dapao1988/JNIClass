@@ -126,6 +126,11 @@ JNIEXPORT jint JNICALL Java_com_jni_demo_HelloWorld_sum_1large
     return sum;
 }
 
+/*
+ * Class:     com_jni_demo_HelloWorld
+ * Method:    init_intarray_2d
+ * Signature: (I)[[I
+ */
 JNIEXPORT jobjectArray Java_com_jni_demo_HelloWorld_init_1intarray_12d
     (JNIEnv* env, jobject obj, jint size) {
     jobjectArray result;
@@ -165,6 +170,87 @@ JNIEXPORT jobjectArray Java_com_jni_demo_HelloWorld_init_1intarray_12d
     return result;
 }
 
+/*
+ * Class:     com_jni_demo_HelloWorld
+ * Method:    CallJavaStaticMethod
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_jni_demo_HelloWorld_CallJavaStaticMethod
+  (JNIEnv *env, jclass clz) {
+    jclass cls = NULL;;
+    jstring str_arg = NULL;
+    jmethodID method_static;
+
+    // 1.从classpath路径下搜索NativeCallback这个类，并返回该类的Class对象
+    cls = (*env)->FindClass(env, "com/jni/demo/NativeCallback");
+    if (cls == NULL) {
+        printf("[Error]: cannot find com/jni/demo/NativeCallback\n");
+      return ;
+    }
+
+    // 2.从cls类中查找StaticCallbackMethod方法
+    method_static = (*env)->GetStaticMethodID(env, cls, "StaticCallbackMethod", "(Ljava/lang/String;I)V");
+    if (method_static == NULL) {
+        printf ("[Error]: cannot find StaticCallbackMethod\n");
+    }
+
+    // 3.调用cls类的method_static 方法
+    str_arg = (*env)->NewStringUTF(env, "This is native static call method");
+    (*env)->CallStaticVoidMethod(env, cls, method_static, str_arg, 50);
+
+    // 4. 手动删除本地引用变量
+    (*env)->DeleteLocalRef(env, cls);
+    (*env)->DeleteLocalRef(env, str_arg);
+ }
+
+/*
+ * Class:     com_jni_demo_HelloWorld
+ * Method:    CallJavaInstanceMethod
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_jni_demo_HelloWorld_CallJavaInstanceMethod
+  (JNIEnv *env, jobject obj) {
+    jclass cls = NULL;;
+    jstring str_arg = NULL;
+    jmethodID method_constructor;
+    jmethodID method_inst;
+    jobject java_obj = NULL;
+
+    // 1.从classpath路径下搜索NativeCallback这个类，并返回该类的Class对象
+    cls = (*env)->FindClass(env, "com/jni/demo/NativeCallback");
+    if (cls == NULL) {
+        printf("[Error]: cannot find com/jni/demo/NativeCallback\n");
+      return ;
+    }
+
+    // 2.从cls类中查找InstanceCallbackMethod方法
+    method_inst = (*env)->GetMethodID(env, cls, "InstanceCallbackMethod", "(Ljava/lang/String;I)V");
+    if (method_inst == NULL) {
+        printf ("[Error]: cannot find StaticCallbackMethod\n");
+        return ;
+    }
+
+    // 3. 查找NativeCallback的构造函数方法
+    method_constructor = (*env)->GetMethodID(env, cls, "<init>", "()V");
+    if (method_constructor == NULL) {
+        printf ("[Error]: cannot find NativeCallback()\n");
+        return ;
+    }
+
+    // 4. 调用NativeCallback构造函数构造对象
+    java_obj = (*env)->NewObject(env, cls, method_constructor);
+    if (java_obj == NULL) {
+        printf ("[Error]: construct NativeCallback object failed\n");
+        return ;
+    }
+    str_arg = (*env)->NewStringUTF(env, "This is native instance call method");
+    (*env)->CallVoidMethod(env, java_obj, method_inst, str_arg, 100);
+
+    // 4. 手动删除本地引用变量
+    (*env)->DeleteLocalRef(env, cls);
+    (*env)->DeleteLocalRef(env, java_obj);
+    (*env)->DeleteLocalRef(env, str_arg);
+}
 #ifdef __cplusplus
 }
 #endif

@@ -55,6 +55,22 @@ JNIEXPORT jint JNICALL Java_com_jni_demo_HelloWorld_sum_1large
 JNIEXPORT jobjectArray JNICALL Java_com_jni_demo_HelloWorld_init_1intarray_12d
   (JNIEnv *, jobject, jint);
 
+/*
+ * Class:     com_jni_demo_HelloWorld
+ * Method:    CallJavaStaticMethod
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_jni_demo_HelloWorld_CallJavaStaticMethod
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_jni_demo_HelloWorld
+ * Method:    CallJavaInstanceMethod
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_jni_demo_HelloWorld_CallJavaInstanceMethod
+  (JNIEnv *, jobject);
+
 #ifdef __cplusplus
 }
 #endif
