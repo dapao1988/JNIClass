@@ -30,3 +30,17 @@
 *.exe
 *.out
 *.app
+
+# ccls
+.ccls-cache
+compile_commands.json
+
+# temp file
+*.swp
+!*.so
+
+# output folder
+bin
+
+# .class
+*\.class
