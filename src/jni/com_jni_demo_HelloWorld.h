@@ -31,6 +31,22 @@ JNIEXPORT jint JNICALL Java_com_jni_demo_HelloWorld_add
 JNIEXPORT jdouble JNICALL Java_com_jni_demo_HelloWorld_sub
   (JNIEnv *, jobject, jfloat, jdouble);
 
+/*
+ * Class:     com_jni_demo_HelloWorld
+ * Method:    sum_tiny
+ * Signature: ([I)I
+ */
+JNIEXPORT jint JNICALL Java_com_jni_demo_HelloWorld_sum_1tiny
+  (JNIEnv *, jobject, jintArray);
+
+/*
+ * Class:     com_jni_demo_HelloWorld
+ * Method:    sum_large
+ * Signature: ([I)I
+ */
+JNIEXPORT jint JNICALL Java_com_jni_demo_HelloWorld_sum_1large
+  (JNIEnv *, jobject, jintArray);
+
 #ifdef __cplusplus
 }
 #endif
