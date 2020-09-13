@@ -71,6 +71,14 @@ JNIEXPORT void JNICALL Java_com_jni_demo_HelloWorld_CallJavaStaticMethod
 JNIEXPORT void JNICALL Java_com_jni_demo_HelloWorld_CallJavaInstanceMethod
   (JNIEnv *, jobject);
 
+/*
+ * Class:     com_jni_demo_HelloWorld
+ * Method:    CallSuperInstanceMethod
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_jni_demo_HelloWorld_CallSuperInstanceMethod
+  (JNIEnv *, jobject);
+
 #ifdef __cplusplus
 }
 #endif

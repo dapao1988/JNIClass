@@ -14,6 +14,8 @@ public class HelloWorld {
     public static native void CallJavaStaticMethod();
     public native void CallJavaInstanceMethod();
 
+    public native void CallSuperInstanceMethod();
+
 	public static void main(String[] args) {
         String libraryDirs = System.getProperty("java.library.path");
         System.out.println(libraryDirs);
@@ -68,6 +70,10 @@ public class HelloWorld {
          * call java API for JNI callback method */
         CallJavaStaticMethod();
         hello_cls.CallJavaInstanceMethod();
+
+        /**
+         * call super parent method */
+        hello_cls.CallSuperInstanceMethod();
 
 	}
 

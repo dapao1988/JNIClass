@@ -251,6 +251,78 @@ JNIEXPORT void JNICALL Java_com_jni_demo_HelloWorld_CallJavaInstanceMethod
     (*env)->DeleteLocalRef(env, java_obj);
     (*env)->DeleteLocalRef(env, str_arg);
 }
+
+/*
+ * Class:     com_jni_demo_HelloWorld
+ * Method:    CallSuperInstanceMethod
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_jni_demo_HelloWorld_CallSuperInstanceMethod
+  (JNIEnv *env, jobject obj) {
+    jclass animal_cls = NULL;
+    jclass cat_cls = NULL;
+    jobject cat_obj = NULL;
+    jmethodID cat_init = NULL;
+    jmethodID cat_get_name = NULL;
+    jmethodID cat_run = NULL;
+    jmethodID animal_get_name = NULL;
+    jstring str_arg;
+    const char* name = NULL;
+
+    animal_cls = (*env)->FindClass(env, "com/jni/demo/Animal");
+    if (animal_cls == NULL) {
+        return ;
+    }
+
+    cat_cls = (*env)->FindClass(env, "com/jni/demo/Cat");
+    if (cat_cls == NULL) {
+        return ;
+    }
+
+    str_arg = (*env)->NewStringUTF(env, "I am a cat!");
+    if (str_arg == NULL) {
+        return ;
+    }
+
+    name = (*env)->GetStringUTFChars(env, str_arg, NULL);
+    if (name == NULL) {
+        return ;
+    }
+
+    cat_init = (*env)->GetMethodID(env, cat_cls, "<init>", "(Ljava/lang/String;)V");
+    if (cat_init == NULL) {
+        /**
+         * we need to do release for some allocated memory */
+        goto exit;
+    }
+    cat_get_name = (*env)->GetMethodID(env, cat_cls, "GetName", "()Ljava/lang/String;");
+    if (cat_get_name == NULL) {
+        goto exit;
+    }
+    cat_run = (*env)->GetMethodID(env, animal_cls, "run", "()V");
+    if (cat_run == NULL) {
+        goto exit;
+    }
+    //cat_obj = (*env)->NewObject(env, cat_cls, cat_init, name);
+    cat_obj = (*env)->NewObject(env, cat_cls, cat_init, str_arg);
+    if (cat_obj == NULL) {
+        printf("Error: Cat object construct failed!\n");
+        goto exit;
+    }
+    (*env)->CallNonvirtualVoidMethod(env, cat_obj, animal_cls, cat_run);
+    jstring temp_name = (*env)->CallNonvirtualObjectMethod(env, cat_obj, cat_cls, cat_get_name);
+    const char* name_in_jni = (*env)->GetStringUTFChars(env, temp_name, NULL);
+    printf("the cat name is : %s\n", name_in_jni);
+exit:
+    (*env)->ReleaseStringUTFChars(env, str_arg, name);
+    (*env)->ReleaseStringUTFChars(env, temp_name, name_in_jni);
+//    (*env)->DeleteLocalRef(env, temp_name);
+    (*env)->DeleteLocalRef(env, cat_cls);
+    (*env)->DeleteLocalRef(env, animal_cls);
+    (*env)->DeleteLocalRef(env, str_arg);
+    (*env)->DeleteLocalRef(env, cat_obj);
+    return ;
+}
 #ifdef __cplusplus
 }
 #endif
