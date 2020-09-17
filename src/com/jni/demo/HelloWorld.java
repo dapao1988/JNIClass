@@ -1,4 +1,5 @@
 package com.jni.demo;
+import com.jni.dynamic.DynamicMethod;
 
 public class HelloWorld {
 
@@ -23,6 +24,7 @@ public class HelloWorld {
         HelloWorld hello_cls = new HelloWorld();
 		String text = hello("hello world");
 		System.out.println(text);
+
 
         int a = 5;
         int b = 3;
@@ -74,11 +76,17 @@ public class HelloWorld {
         /**
          * call super parent method */
         hello_cls.CallSuperInstanceMethod();
+		
+		/**
+ 		 * DynamicMethod called */
+        DynamicMethod dynamic_obj = new DynamicMethod();
+        dynamic_obj.PrintHello();
 
 	}
 
 	static {
 		System.loadLibrary("HelloWorld");
+		System.loadLibrary("DynamicMethod");
 	}
 
 }

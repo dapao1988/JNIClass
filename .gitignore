@@ -44,3 +44,5 @@ bin
 
 # .class
 *\.class
+
+src/compile_commands.json
